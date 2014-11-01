@@ -6,7 +6,7 @@ class Event extends CI_Controller {
 	{
 		parent:: __construct();
 		$this->load->model('event_model');
-		$this->load->helper('form');
+		$this->load->helper(array('form', 'date'));
 		$this->load->library('form_validation');
 		if (!$this->session->userdata('nik'))
 		{
@@ -38,15 +38,19 @@ class Event extends CI_Controller {
 	{
 		$data['id'] = false;
 		$data['event'] = '';
+		$data['max_call_count'] = 3;
+		$data['periode'] = '';
 		$data['description'] = '';
+		
 		
 		if($id != 0)
 		{
 			$data = (array) $this->event_model->get_data($id);
+			$data['periode'] = format_dmy($data['event_start']).' - '.format_dmy($data['event_stop']);
 		}
 		
-		$this->form_validation->set_rules('event', 'event', 'trim|required');
-		$this->form_validation->set_rules('description', 'description', 'trim|required');
+		$this->form_validation->set_rules('event_name', 'event', 'trim|required');
+		$this->form_validation->set_rules('max_call_count', 'max_call_count', 'trim|required|numeric');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -61,8 +65,13 @@ class Event extends CI_Controller {
 		}
 		else
 		{
+			$periode = explode(' - ', $this->input->post('periode'));
+			
 			$save['id'] = ($id != 0) ? $id : '';
-			$save['event'] = $this->input->post('event');
+			$save['event'] = $this->input->post('event_name');
+			$save['max_call_count'] = $this->input->post('max_call_count');
+			$save['event_start'] = format_ymd($periode[0]);
+			$save['event_stop'] = format_ymd($periode[1]);
 			$save['description'] = $this->input->post('description');
 			$save['created_at'] = date('Y-m-d H:i:s');
 			$save['created_by'] = $this->session->userdata('id');

@@ -10,6 +10,7 @@
 		<link href="<?php echo config_item('assets'); ?>css/font-awesome.css" rel="stylesheet" />
 		<link href="<?php echo config_item('assets'); ?>css/jquery.gritter.css" rel="stylesheet">
 		<link href="<?php echo config_item('assets'); ?>css/dataTables.bootstrap.css" rel="stylesheet" />
+		<link href="<?php echo config_item('assets'); ?>css/daterangepicker.css" rel="stylesheet" />
 		<link href="<?php echo config_item('assets'); ?>css/style.css" rel="stylesheet">
 		<link href="<?php echo config_item('assets'); ?>css/style-responsive.css" rel="stylesheet" />
 		<!--[if lt IE 9]>

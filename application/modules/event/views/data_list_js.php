@@ -40,7 +40,7 @@
     
     function myModal(id)
 	{
-		$.post("<?php echo base_url(); ?>tenant/post_data/"+id,
+		$.post("<?php echo base_url(); ?>event/post_data/"+id,
 			function(data){
 				$('#myModal').html(data).modal('show');
 			}

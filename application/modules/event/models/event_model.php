@@ -24,7 +24,7 @@ class Event_model extends CI_Model {
 	
 	function get_data($id)
 	{
-		$query = $this->db->get_where('tenants', array('id'=>$id));
+		$query = $this->db->get_where('events', array('id'=>$id));
 		return $query->row_array();
 	}
 	
@@ -32,19 +32,19 @@ class Event_model extends CI_Model {
 	{
 		if($data['id'])
 		{
-			$this->db->update('tenants', $data, array('id'=>$data['id']));
+			$this->db->update('events', $data, array('id'=>$data['id']));
 			$this->session->set_flashdata('alert', '<i class="icon-info-sign"></i> Success! Data has been edited');
 		}
 		else
 		{
-			$this->db->insert('tenants', $data);
+			$this->db->insert('events', $data);
 			$this->session->set_flashdata('alert', '<i class="icon-info-sign"></i> Success! Data has been added');
 		}
 	}
 	
 	function delete_data($id)
 	{
-		$this->db->delete('tenants', array('id'=>$id));
+		$this->db->delete('events', array('id'=>$id));
 		$this->session->set_flashdata('alert', '<i class="icon-info-sign"></i> Success! Data has been deleted');
 	}
 

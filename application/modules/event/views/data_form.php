@@ -1,17 +1,25 @@
+<script src="<?php echo config_item('assets'); ?>js/moment.min.js"></script>
+<script src="<?php echo config_item('assets'); ?>js/daterangepicker.js"></script>
 <script>
-	function save_tenant(id)
+	//Daterange Picker
+	$(document).ready(function() {
+		$('#periode').daterangepicker();	
+	});
+	
+	function save_data(id)
 	{
-		$.post("<?php echo base_url(); ?>tenant/post_data/"+id,
+		$.post("<?php echo site_url('event/post_data'); ?>/"+id,
 		{
-			name: $('#tenant').val(),
-			description: $('#description').val(),
-			max_call_count: $('#max_call_count').val()
+			event_name: $('#event_name').val(),
+			max_call_count: $('#max_call_count').val(),
+			periode: $('#periode').val(),
+			description: $('#description').val()			
 		},
 		function(data)
 		{	
 			if(data == 1)
 			{
-				window.location = "<?php echo base_url();?>tenant";
+				window.location = "<?php echo site_url('event');?>";
 			}
 			else
 			{
@@ -32,21 +40,27 @@
 			<div class="form-group">
 				<label>Event Name<span class="text-danger">*</span></label>
 				<?php
-					echo form_input(array('class'=>'form-control', 'id'=>'name', 'value'=>set_value('name', $name)));
-				?> 
-			</div>
-			<div class="form-group">
-				<label>Description<span class="text-danger">*</span></label>
-				<?php
-					echo form_textarea(array('class'=>'form-control', 'id'=>'description', 'rows'=>'3', 'value'=>set_value('description', $description)));
+					echo form_input(array('class'=>'form-control', 'id'=>'event_name', 'name'=>'event_name', 'value'=>set_value('event_name', $event)));
 				?> 
 			</div>
 			<div class="form-group">
 				<label>Max Call Count<span class="text-danger">*</span></label>
 				<?php
-					echo form_input(array('class'=>'form-control', 'id'=>'name', 'value'=>set_value('name', $name)));
+					echo form_input(array('class'=>'form-control', 'id'=>'max_call_count', 'name'=>'max_call_count', 'value'=>set_value('max_call_count', $max_call_count)));
 				?> 
-			</div>					
+			</div>
+			<div class="form-group">
+				<label>Event Periode<span class="text-danger">*</span></label>
+				<?php
+					echo form_input(array('class'=>'form-control', 'id'=>'periode', 'name'=>'periode', 'value'=>set_value('periode', $periode)));
+				?> 
+			</div>
+			<div class="form-group">
+				<label>Description</label>
+				<?php
+					echo form_textarea(array('class'=>'form-control', 'id'=>'description', 'name'=>'description', 'rows'=>'3', 'value'=>set_value('description', $description)));
+				?> 
+			</div>
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-white" onclick="return save_data('<?php echo $id; ?>');" type="button">Submit <i class="icon-circle-arrow-right"></i></button>
