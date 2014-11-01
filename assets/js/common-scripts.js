@@ -1,0 +1,123 @@
+function myConfirm(url) {
+	if ($("#confirmModal").length > 0) {
+		$("#confirmModal").remove();
+	}
+	var divModal = null;
+	divModal = $('<div class="modal fade" id="confirmModal">');
+	divModal.append('<div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title"><i class="icon-exclamation-sign"></i> Confirmation</h4></div><div class="modal-body">Are you sure whant to delete?</div><div class="modal-footer"><button data-dismiss="modal" class="btn btn-white" type="button"><i class="icon-remove-sign"></i> Close</button><a href="'+url+'" class="btn btn-white">Yes <i class="icon-circle-arrow-right"></i></a></div></div></div>');
+	$('body').append(divModal);
+	$('#confirmModal').modal('show');
+	return false;
+}
+
+/*---LEFT BAR ACCORDION----*/
+$(function() {
+	$('#nav-accordion').dcAccordion({
+		eventType : 'click',
+		autoClose : true,
+		saveState : true,
+		disableLink : true,
+		speed : 'slow',
+		showCount : false,
+		autoExpand : true,
+		//        cookie: 'dcjq-accordion-1',
+		classExpand : 'dcjq-current-parent'
+	});
+});
+
+var Script = function() {
+
+	//    sidebar dropdown menu auto scrolling
+
+	jQuery('#sidebar .sub-menu > a').click(function() {
+		var o = ($(this).offset());
+		diff = 250 - o.top;
+		if (diff > 0)
+			$("#sidebar").scrollTo("-=" + Math.abs(diff), 500);
+		else
+			$("#sidebar").scrollTo("+=" + Math.abs(diff), 500);
+	});
+
+	//    sidebar toggle
+
+	$(function() {
+		function responsiveView() {
+			var wSize = $(window).width();
+			if (wSize <= 768) {
+				$('#container').addClass('sidebar-close');
+				$('#sidebar > ul').hide();
+			}
+
+			if (wSize > 768) {
+				$('#container').removeClass('sidebar-close');
+				$('#sidebar > ul').show();
+			}
+		}
+
+
+		$(window).on('load', responsiveView);
+		$(window).on('resize', responsiveView);
+	});
+
+	$('.icon-reorder').click(function() {
+		if ($('#sidebar > ul').is(":visible") === true) {
+			$('#main-content').css({
+				'margin-left' : '0px'
+			});
+			$('#sidebar').css({
+				'margin-left' : '-210px'
+			});
+			$('#sidebar > ul').hide();
+			$("#container").addClass("sidebar-closed");
+		} else {
+			$('#main-content').css({
+				'margin-left' : '210px'
+			});
+			$('#sidebar > ul').show();
+			$('#sidebar').css({
+				'margin-left' : '0'
+			});
+			$("#container").removeClass("sidebar-closed");
+		}
+	});
+
+	// custom scrollbar
+	$("#sidebar").niceScroll({
+		styler : "fb",
+		cursorcolor : "#e8403f",
+		cursorwidth : '3',
+		cursorborderradius : '10px',
+		background : '#404040',
+		spacebarenabled : false,
+		cursorborder : ''
+	});
+
+	$("html").niceScroll({
+		styler : "fb",
+		cursorcolor : "#e8403f",
+		cursorwidth : '6',
+		cursorborderradius : '10px',
+		background : '#404040',
+		spacebarenabled : false,
+		cursorborder : '',
+		zindex : '1000'
+	});
+
+	// widget tools
+
+	jQuery('.panel .tools .icon-chevron-down').click(function() {
+		var el = jQuery(this).parents(".panel").children(".panel-body");
+		if (jQuery(this).hasClass("icon-chevron-down")) {
+			jQuery(this).removeClass("icon-chevron-down").addClass("icon-chevron-up");
+			el.slideUp(200);
+		} else {
+			jQuery(this).removeClass("icon-chevron-up").addClass("icon-chevron-down");
+			el.slideDown(200);
+		}
+	});
+
+	jQuery('.panel .tools .icon-remove').click(function() {
+		jQuery(this).parents(".panel").parent().remove();
+	});
+
+}();
